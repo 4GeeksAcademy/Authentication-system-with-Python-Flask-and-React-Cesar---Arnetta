@@ -2,10 +2,18 @@ import { useState } from "react";
 import { authenticationServices } from "../services/authenticationServices";
 import { TextField } from "@mui/material";
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Login = () => {
 
   const { store, dispatch } = useGlobalReducer();
+
+  const navigate = useNavigate();
+
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+
   const [loginData, setLoginData] = useState(
     {
       email: "",
@@ -29,12 +37,21 @@ export const Login = () => {
         email: loginData.email.trim(),
         password: loginData.password.trim()
       }
-     await authenticationServices.login(loginUser)
+      await authenticationServices.login(loginUser)
+      setSuccessMessage("Login correcto ✅");
+      setTimeout(() => {
+        setSuccessMessage("");
+        navigate("/");
+      }, 1500);
+
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+      setErrorMessage("Credenciales inválidas. Por favor intenta de nuevo ❌");
+      setTimeout(() => setErrorMessage(""), 1500);
+    } finally {
+      setIsAuthenticating(false);
     }
-    catch (error) {
-      console.error('Error al agregar usuario:', error);
-    }
-  }
+  };
 
   const logOut = () => {
     console.log("Token antes de logout:", localStorage.getItem("jwt-token"))
@@ -46,6 +63,16 @@ export const Login = () => {
     <>
       <form onSubmit={handleSubmit}>
         <div className="container">
+          {successMessage && (
+            <div className="alert alert-success text-center" role="alert">
+              {successMessage}
+            </div>
+          )}
+          {errorMessage && (
+            <div className="alert alert-danger text-center" role="alert">
+              {errorMessage}
+            </div>
+          )}
           <ul className="list-group">
             <TextField
               label="Email"
@@ -69,6 +96,7 @@ export const Login = () => {
               type="password"
             />
             <button type="submit" className="btn btn-primary">Login</button>
+            <button className="btn btn-primary" onClick={() => navigate("/signup")}>Signup</button>
 
           </ul>
         </div>

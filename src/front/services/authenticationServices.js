@@ -2,7 +2,7 @@ const baseUrl = import.meta.env.VITE_BACKEND_URL;
 console.log(baseUrl);
 
 export const authenticationServices = {
-  signUp: async ({ email, password }) => {
+  signup: async ({ email, password }) => {
     try {
       const request = await fetch(
         `https://silver-telegram-jjqx47v4x4973q664-3001.app.github.dev/api/user/create`,

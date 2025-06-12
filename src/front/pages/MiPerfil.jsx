@@ -4,7 +4,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer";  // Custom hook for ac
 import React, { useEffect, useState } from 'react';
 import { authenticationServices } from "../services/authenticationServices";
 
-export const Demo = () => {
+export const MiPerfil = () => {
   // Access the global state and dispatch function using the useGlobalReducer hook.
   const { store, dispatch } = useGlobalReducer()
 
