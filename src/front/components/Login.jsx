@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { authenticationServices } from "../services/authenticationServices";
 import { TextField } from "@mui/material";
-import useGlobalReducer from "../hooks/useGlobalReducer";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
 
-  const { store, dispatch } = useGlobalReducer();
 
   const navigate = useNavigate();
 
@@ -53,57 +51,50 @@ export const Login = () => {
     }
   };
 
-  const logOut = () => {
-    console.log("Token antes de logout:", localStorage.getItem("jwt-token"))
-    localStorage.removeItem("jwt-token");
-    console.log("Token después de logout:", localStorage.getItem("jwt-token")); // debe ser null
-  }
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <div className="container">
-          {successMessage && (
-            <div className="alert alert-success text-center" role="alert">
-              {successMessage}
-            </div>
-          )}
-          {errorMessage && (
-            <div className="alert alert-danger text-center" role="alert">
-              {errorMessage}
-            </div>
-          )}
-          <ul className="list-group">
-            <TextField
-              label="Email"
-              variant="outlined"
-              name="email"
-              value={loginData.email}
-              onChange={handleChange}
-              fullWidth
-              required
-              type="email"
-              helperText="Ingrese un correo electrónico válido"
-            />
-            <TextField
-              label="Password"
-              variant="outlined"
-              name="password"
-              value={loginData.password}
-              onChange={handleChange}
-              fullWidth
-              required
-              type="password"
-            />
-            <button type="submit" className="btn btn-primary">Login</button>
-            <button className="btn btn-primary" onClick={() => navigate("/signup")}>Signup</button>
-
-          </ul>
-        </div>
-      </form>
-      <div>
-        <button type="button" className="btn btn-primary" onClick={logOut}>Logout</button>
+    <div className="container py-4">
+      <div className="p-5 mb-4 bg-body-tertiary rounded-3">
+        <form onSubmit={handleSubmit}>
+          <div className="container">
+            {successMessage && (
+              <div className="alert alert-success text-center" role="alert">
+                {successMessage}
+              </div>
+            )}
+            {errorMessage && (
+              <div className="alert alert-danger text-center" role="alert">
+                {errorMessage}
+              </div>
+            )}
+            <ul className="list-group">
+              <TextField
+                label="Email"
+                variant="outlined"
+                name="email"
+                value={loginData.email}
+                onChange={handleChange}
+                fullWidth
+                required
+                type="email"
+                helperText="Ingrese un correo electrónico válido"
+              />
+              <TextField
+                label="Password"
+                variant="outlined"
+                name="password"
+                value={loginData.password}
+                onChange={handleChange}
+                fullWidth
+                required
+                type="password"
+              />
+              <button type="submit" className="btn btn-primary mt-2">Login</button>
+              <button className="btn btn-primary mt-2" onClick={() => navigate("/signup")}>Signup</button>
+            </ul>
+          </div>
+        </form>
       </div>
-    </>
+    </div>
   );
 };

@@ -1,13 +1,8 @@
-// Import necessary components from react-router-dom and other parts of the application.
 import { Link } from "react-router-dom";
-import useGlobalReducer from "../hooks/useGlobalReducer";  // Custom hook for accessing the global state.
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { authenticationServices } from "../services/authenticationServices";
 
 export const MiPerfil = () => {
-  // Access the global state and dispatch function using the useGlobalReducer hook.
-  const { store, dispatch } = useGlobalReducer()
-
   const tokenExist = localStorage.getItem("jwt-token")
 
   const [userData, setUserData] = useState(null);
@@ -17,15 +12,15 @@ export const MiPerfil = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const data = await authenticationServices.getMyTask(); 
-        setUserData(data); 
+        const data = await authenticationServices.getPrivateInfo();
+        setUserData(data);
       } catch (err) {
         console.error("Error al obtener los datos:", err);
       } finally {
         setLoading(false);
       }
     };
-    fetchUserData(); 
+    fetchUserData();
   }, [tokenExist]);
 
   if (loading) {
@@ -33,17 +28,24 @@ export const MiPerfil = () => {
   }
 
   return (
-    <div className="container">
-      <div>
-        {tokenExist ?
-          (<p>{userData.message}</p>)
-          :
-          (<p> Debes loguearte</p>)
-        }
+    <div className="container py-4">
+      <div className="p-5 mb-4 bg-body-tertiary rounded-3">
+        <div className="container">
+          <div>
+            {tokenExist ?
+              (<>
+                <p className="fs-4 text-center fw-bold">Datos de perfil. Esta es una ruta privada</p>
+                <p className="fs-5 text-center border border-primary">Correo: {userData.message}</p>
+              </>)
+              :
+              (<p className="fs-4 text-center fw-bold">Debes iniciar sesión</p>)
+            }
+          </div >
+          <Link className="d-flex justify-content-center" to="/">
+            <button className="btn btn-primary">Back home</button>
+          </Link>
+        </div>
       </div>
-      <Link to="/">
-        <button className="btn btn-primary">Back home</button>
-      </Link>
     </div>
   );
 };

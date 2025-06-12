@@ -43,7 +43,7 @@ def private_route():
     user_id = get_jwt_identity()
     user = User.query.get(user_id)
     response_body = {
-        "message": f"Hola {user.email}, soy una ruta privada"
+        "message": f"{user.email}"
     }
 
     return jsonify(response_body), 200

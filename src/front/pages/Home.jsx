@@ -1,55 +1,19 @@
-import React, { useEffect } from "react"
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-import { Login } from "../components/Login.jsx";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
 
-	const { store, dispatch } = useGlobalReducer()
-
-	// const loadMessage = async () => {
-	// 	try {
-	// 		const backendUrl = import.meta.env.VITE_BACKEND_URL
-	// 		console.log(backendUrl);
-			
-
-	// 		if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
-
-	// 		const response = await fetch(backendUrl + "/api/hello")
-	// 		const data = await response.json()
-
-	// 		if (response.ok) dispatch({ type: "set_hello", payload: data.message })
-
-	// 		return data
-
-	// 	} catch (error) {
-	// 		if (error.message) throw new Error(
-	// 			`Could not fetch the message from the backend.
-	// 			Please check if the backend is running and the backend port is public.`
-	// 		);
-	// 	}
-
-	// }
-
-	// useEffect(() => {
-	// 	loadMessage()
-	// }, [])
+	  const navigate = useNavigate();
 
 	return (
-		<div className="text-center mt-5">
-			<Login></Login>
-			<h1 className="display-4">Hello Rigo!!</h1>
-			<p className="lead">
-				<img src={rigoImageUrl} className="img-fluid rounded-circle mb-3" alt="Rigo Baby" />
-			</p>
-			<div className="alert alert-info">
-				{store.message ? (
-					<span>{store.message}</span>
-				) : (
-					<span className="text-danger">
-						Loading message from the backend (make sure your python 🐍 backend is running)...
-					</span>
-				)}
+		<div className="container py-4">
+			<div className="p-5 mb-4 bg-body-tertiary rounded-3">
+				<div className="container-fluid py-5">
+					<h1 className="display-5 fw-bold">Proyecto de autenticación</h1>
+					<p className="col-md-12 fs-4">Prueba iniciar sesión en el barra de navegación o en este botón que te dejamos a continuación.
+						¿No tienes usuario? Dentro del login podrás crear uno, sino igual te dejamos el botón para cerar el usuario</p>
+					<button className="btn btn-primary btn-lg m-2" onClick={() => navigate("/login")}>Login</button>
+					<button className="btn btn-primary btn-lg m-2" onClick={() => navigate("/signup")}>Signup</button>
+				</div>
 			</div>
 		</div>
 	);

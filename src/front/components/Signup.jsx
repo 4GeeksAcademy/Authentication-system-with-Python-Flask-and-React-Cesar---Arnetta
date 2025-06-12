@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { authenticationServices } from "../services/authenticationServices";
 import { TextField } from "@mui/material";
-import useGlobalReducer from "../hooks/useGlobalReducer";
+import { useNavigate } from "react-router-dom";
 
 export const Signup = () => {
 
-  const { store, dispatch } = useGlobalReducer();
+ const navigate = useNavigate();
 
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -48,43 +48,48 @@ export const Signup = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="container">
-         {successMessage && (
-            <div className="alert alert-success text-center" role="alert">
-              {successMessage}
-            </div>
-          )}
-          {errorMessage && (
-            <div className="alert alert-danger text-center" role="alert">
-              {errorMessage}
-            </div>
-          )}
-        <ul className="list-group">
-          <TextField
-            label="Email"
-            variant="outlined"
-            name="email"
-            value={signupData.email}
-            onChange={handleChange}
-            fullWidth
-            required
-            type="email"
-            helperText="Ingrese un correo electrónico válido"
-          />
-          <TextField
-            label="Password"
-            variant="outlined"
-            name="password"
-            value={signupData.password}
-            onChange={handleChange}
-            fullWidth
-            required
-            type="password"
-          />
-          <button type="submit" className="btn btn-primary">Submit</button>
-        </ul>
+    <div className="container py-4">
+      <div className="p-5 mb-4 bg-body-tertiary rounded-3">
+        <form onSubmit={handleSubmit}>
+          <div className="container">
+            {successMessage && (
+              <div className="alert alert-success text-center" role="alert">
+                {successMessage}
+              </div>
+            )}
+            {errorMessage && (
+              <div className="alert alert-danger text-center" role="alert">
+                {errorMessage}
+              </div>
+            )}
+            <ul className="list-group">
+              <TextField
+                label="Email"
+                variant="outlined"
+                name="email"
+                value={signupData.email}
+                onChange={handleChange}
+                fullWidth
+                required
+                type="email"
+                helperText="Ingrese un correo electrónico válido"
+              />
+              <TextField
+                label="Password"
+                variant="outlined"
+                name="password"
+                value={signupData.password}
+                onChange={handleChange}
+                fullWidth
+                required
+                type="password"
+                inputProps={{ minLength: 6 }}
+              />
+              <button type="submit" className="btn btn-primary mt-2">Submit</button>
+            </ul>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   );
 };
